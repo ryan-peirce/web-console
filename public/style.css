@@ -1,0 +1,43 @@
+body {
+  font-family: arial,sans-serif;
+}
+
+.column {
+  float: left;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#scoreBoard {
+  background: lightblue
+}
+
+#myCanvas {
+  background: seashell; 
+  display: block; 
+  margin: 0 auto
+}
+
+.dpad{
+  height: 100px;
+  width: 100px;
+  -webkit-touch-callout:none;
+-webkit-user-select:none;
+-khtml-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+user-select:none;
+-webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+#up{
+  margin-left: 50px;
+}
+#down{
+  margin-left: 50px;
+}
