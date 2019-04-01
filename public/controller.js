@@ -14,7 +14,8 @@ function join(){
     up: false,
     down: false,
     left: false,
-    right: false
+    right: false,
+    projectile: false
   };
 
   function moveup() {
@@ -38,6 +39,14 @@ function join(){
     playerMovement.down = false;
     playerMovement.left = false;
     playerMovement.right = false;
+  }
+
+  function shoot(){
+    playerMovement.projectile = true;
+  }
+
+  function stopshoot(){
+    playerMovement.projectile = false;
   }
   
   setInterval(() => {

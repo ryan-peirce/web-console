@@ -12,11 +12,12 @@ function join(){
   setInterval(() => {
     socket.emit('playerMovement', playerMovement);
   }, 1000 / 60);
+  document.getElementById("joininput").style.display = "none";
 }
 
 
 const drawPlayer = (player) => {
-    
+  if(!player.dead){
     ctx.beginPath();
     ctx.rect(player.x, player.y, player.width, player.height);
     ctx.fillStyle = '#0095DD';
@@ -26,20 +27,43 @@ const drawPlayer = (player) => {
     ctx.fillStyle = "black";
     ctx.textAlign = "center";
     ctx.fillText(player.name, player.x + 12, player.y -5); 
+  }
+
+    var ele = document.createElement("div");
+    ele.innerHTML = player.name + ": " + player.kills;
+    document.getElementById("leaderboard").appendChild(ele);
+  };
+
+  const drawProjectile = (projectile) => {
+    
+    ctx.beginPath();
+    ctx.rect(projectile.x, projectile.y, 10, 10);
+    ctx.fillStyle = 'red';
+    ctx.fill();
+    ctx.closePath();
   };
 
   socket.on('state', (gameState) => {
     ctx.clearRect(0, 0, width, height)
+    document.getElementById("leaderboard").innerHTML = "";
     for (let player in gameState.players) {
-      drawPlayer(gameState.players[player])
+      
+        drawPlayer(gameState.players[player])
+      
+      
+    }
+    for (let projectile in gameState.projectiles) {
+      drawProjectile(gameState.projectiles[projectile])
     }
   });
-
+  
+  var projtime = true;
   const playerMovement = {
     up: false,
     down: false,
     left: false,
-    right: false
+    right: false,
+    projectile: false
   };
   const keyDownHandler = (e) => {
     if (e.keyCode == 39) {
@@ -50,6 +74,8 @@ const drawPlayer = (player) => {
       playerMovement.up = true;
     } else if (e.keyCode == 40) {
       playerMovement.down = true;
+    } else if (e.keyCode == 32) {
+      playerMovement.projectile = true;
     }
   };
   const keyUpHandler = (e) => {
@@ -61,7 +87,9 @@ const drawPlayer = (player) => {
       playerMovement.up = false;
     } else if (e.keyCode == 40) {
       playerMovement.down = false;
-    }
+    } else if (e.keyCode == 32) {
+      playerMovement.projectile = false;
+     }
   };
 
   
