@@ -23,7 +23,7 @@
           <br>
           <button class="dpad" id="left" onmousedown="moveleft()" onmouseup="stopMove()" ontouchstart="moveleft()">LEFT</button>
           <button class="dpad" id="right" onmousedown="moveright()" onmouseup="stopMove()" ontouchstart="moveright()">RIGHT</button>
-          <button class="dpad" id="right" style="float: right;" onmousedown="shoot()" onmouseup="stopshoot()" >SHOOT</button>
+          <button class="dpad" id="right" style="float: right;" onmousedown="shoot()" onmouseup="stopshoot()" ontouchstart="shoot()" ontouchend="stopshoot()" >SHOOT</button>
           <br>
           <button class="dpad" id="down" onmousedown="movedown()" onmouseup="stopMove()" ontouchstart="movedown()">DOWN</button>
        </div>
