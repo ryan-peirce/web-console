@@ -1,0 +1,10 @@
+mixin game(item)
+    .row.gamerow(data-id=item.name)    
+        .col-lg-3 #{item.name}
+        .col-lg-3 #{item.owner}
+        .col-lg-3 #{item.players}
+        .col-lg-3 #{item.game_type}
+
+mixin player(item)
+    .row.playerrow(data-id=item.name)    
+        .col-lg-3 #{item.name}

@@ -41,3 +41,8 @@ user-select:none;
 #down{
   margin-left: 50px;
 }
+
+.gamerow:hover{
+  background-color: azure;
+  cursor: pointer
+}

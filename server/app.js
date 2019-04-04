@@ -1,38 +1,64 @@
 const express = require('express');
+const createError = require('http-errors');
 const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
 const http = require('http');
+const mongoose = require('mongoose');
 const server = http.createServer(app);
 const io = require('socket.io')(server);
 
+/**
+//Change this to match your db dumbass!d
+mongoose.connect('mongodb://localhost/test');
+
+//connect to mongo
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("connected to mongoDB");
+});
+*/
 app.use(morgan('dev'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Static middleware
-app.use(express.static(path.join(__dirname, '..', 'public')));
-app.set('views', path.join(__dirname, '../views'))
-app.get('/', (req, res, next) => {
-	res.sendFile(path.join(__dirname, '..', 'index.html'));
-});
-app.get('/controller', (req, res, next) => {
-	res.sendFile(path.join(__dirname, '../views/', 'controller.html'));
+app.use(express.static(path.join(__dirname,"..", '')));
+// view engine setup
+app.set('views', path.join(__dirname, '../views'));
+app.set('view engine', 'pug');
+
+
+const webRouter = require('../routes/web_routes/pages');
+const apiGamesRouter = require('../routes/api/games');
+
+app.use('/', webRouter);
+app.use('/api/game', apiGamesRouter);
+
+
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
 });
 
-app.use((req, res, next) => {
-	const err = new Error('Not Found');
-	err.status = 404;
-	next(err);
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  
+  // render the error page
+  res.status(err.status || 500);
+  res.render('pages/error');
 });
 
-app.use((err, req, res, next) => {
-	res.status(err.status || 500);
-	res.send(err.message || 'Internal server error');
-});
+global.games = {};
+
 
 const gameState = {
 	players: {},

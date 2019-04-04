@@ -1,0 +1,28 @@
+extends ../mixins/layout
+block content 
+  
+  .main.container
+    h3(style="border-bottom: 1px solid black") Game Lobby: #{game.name}
+    .row
+      .col-lg-6
+        p Owner: #{game.owner}
+        p Players: #{game.players}/8
+        p Game Type: #{game.game_type}
+      .col-lg-6
+        button#join_game Join Game
+    .row
+      .col-lg-6
+        h3(style="border-top: 1px solid black") Player List:
+      .col-lg-6
+        h3(style="border-top: 1px solid black") Chat:    
+    .row
+      .col-lg-6
+        div#player_list(style="border: 1px solid black; height:400px;")
+          for item in game.player_list
+            +player(item)
+      .col-lg-6
+        div#chat_log(style="border: 1px solid black; height:400px;")
+
+    
+  script(src='/views/pages/lobby.js')
+

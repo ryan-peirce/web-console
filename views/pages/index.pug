@@ -1,0 +1,38 @@
+extends ../mixins/layout
+block content 
+  
+  .main.container
+    .row
+      .col-lg-6
+        h3 Enter Player Name
+        div.form-group
+          .row
+            .col-lg-5
+              input.form-control(type='text' id='player_name' placeholder='Name' name='player_name')
+            .col-lg-1
+              button#submit-register.btn.btn-primary(onclick="newPlayer()") Submit
+          .row
+            p#error-msg-player(style="color: red;")
+      .col-lg-6
+        h3 Create New Game
+        div.form-group
+          .row
+            .col-lg-5
+              input.form-control(type='text' id='game_name' placeholder='Game' name='game_name')
+            .col-lg-1
+              button#submit-register.btn.btn-primary(onclick="newGame()") Submit
+          .row
+            p#error-msg-game(style="color: red;")
+    
+          
+    div Games
+      .row(style="border-bottom: 1px solid black")
+        .col-lg-3 Game Name
+        .col-lg-3 Room Creator
+        .col-lg-3 Players
+        .col-lg-3 Game Type
+
+      for item in games
+        +game(item)
+  script(src='/views/pages/index.js')
+
